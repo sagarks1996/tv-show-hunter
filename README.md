@@ -26,9 +26,9 @@ See the section about [deployment](https://cli.vuejs.org/guide/deployment.html#n
 
 ## 🛠️ Built With
 
-* <a href="https://v2.vuejs.org" target="_blank">Vue JS 2</a> The Web Framework used
+* <a href="https://v2.vuejs.org" target="_blank">Vue JS 2</a> - The Web Framework used
     * Decided to go with Vue 2 because i've prior experience in it. Built few production level application at my previous job.
-* <a href="https:https://vuetifyjs.com/en/" target="_blank">Vuetify</a> The UI Component Library
+* <a href="https:https://vuetifyjs.com/en/" target="_blank">Vuetify</a> - The UI Component Library
     * Vuetify was the UI Library i used in the previous Vue JS projects i've worked on. I'm more familiar with Vuetify, so decided to go on with it.
 
 ## 📦 Deployment
