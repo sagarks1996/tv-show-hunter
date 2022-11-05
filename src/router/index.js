@@ -6,7 +6,7 @@ import Details from "../views/Details.vue";
 Vue.use(VueRouter);
 
 const routes = [
-   {
+  {
     path: "/",
     name: "Home",
     component: Home,
@@ -16,12 +16,10 @@ const routes = [
     name: "Details",
     component: Details,
   },
-  
 ];
 
 const router = new VueRouter({
-  mode: 'history',
-    base: process.env.BASE_URL,
-    routes
+  mode: "hash",
+  routes,
 });
 export default router;
