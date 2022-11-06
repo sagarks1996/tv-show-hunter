@@ -3,22 +3,40 @@
     <div
       class="d-block pa-2 blue-grey darken-4 accent-4 white--text full-height"
     >
+    <!--  -->
       <v-main>
         <v-container>
           <v-row align="center">
-            <v-col class="d-flex" cols="12" sm="6">
-              <v-btn text dark @click="filtrerByRating" active-class>
+            <v-col  cols="6" md="2">
+              <v-btn class="mb-5" text dark @click="filtrerByRating" active-class>
                 Top rated
               </v-btn>
             </v-col>
+            <v-col
+            cols="12" md="5"
+              >
+                <v-select
+                  v-model="value"
+                  :items="items"
+                  
+                  label="Genres"
+                  clearable
+                  solo
+                  dark
+                  dense
+                  item-color="blue-grey darken-4"
+                  @input="filterByGenres"
+                ></v-select>
+              </v-col>
             <!-- Search bar -->
-            <v-col class="d-flex" cols="12" sm="6">
+            <v-col  cols="12" md="5" >
               <v-text-field
                 solo
                 v-model="search"
                 append-icon="mdi-magnify"
                 label="Search for a Show"
                 dark
+                dense
                 clearable
                 @input="serachMethod"
               ></v-text-field>
@@ -86,7 +104,9 @@ export default {
     showsList: [],
     filteredShows: [],
     search: null,
-    genres: ["Drama", "Thriller"],
+    items: [],
+    value: null,
+    sampleArray:[]
   }),
   methods: {
     async initialize() {
@@ -94,21 +114,27 @@ export default {
         const response = await axios.get(`${SERVER_URL}`);
         this.showsList = response.data;
         this.filteredShows = response.data;
-        console.log(JSON.stringify(response.data));
+        
+         response.data.filter((item)=>{
+          item.genres.forEach(element => {
+            
+             this.items.includes(element) ? null : this.items.push(element);
+          });
+       
+        })
       } catch (error) {
         console.log(error);
       }
     },
     serachMethod(e) {
+      this.value = null;
       this.filteredShows = this.showsList.filter((item) => {
         return (
           (item.name || "").toLowerCase().indexOf((e || "").toLowerCase()) > -1
         );
       });
-      // console.log("output :" + JSON.stringify(this.filteredShows));
     },
     onClickedShow(item) {
-      // console.log("on clicked :" + JSON.stringify(item));
       this.$router.push({ name: "Details", params: item });
     },
     goBack() {
@@ -118,7 +144,25 @@ export default {
       this.filteredShows = this.filteredShows.sort(function(a, b) {
         return b.rating.average - a.rating.average;
       });
+      
     },
+    filterByGenres(){
+      this.sampleArray = [];
+      this.search = null;
+
+      if(this.value){
+        console.log(this.value.length);
+        this.sampleArray = [];
+        this.showsList.filter((item) => {
+         item.genres.includes(this.value) ? this.sampleArray.push(item) : null
+        });
+        // console.log(JSON.stringify(this.sampleArray));
+        this.filteredShows = this.sampleArray;
+      }else{
+        this.value = null;
+        this.filteredShows = this.showsList;
+      }
+    }
   },
   created() {
     this.initialize();
